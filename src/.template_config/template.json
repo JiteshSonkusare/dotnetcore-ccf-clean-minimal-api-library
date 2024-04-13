@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "classifications": [ "Web", "Clean", "CCF", "DNB" ],
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "identity": "CCF.Clean.Minimal.Definition",
+  "name": "CCF Clean Minimal Definition",
+  "description": "This NuGet package enables the development of ASP.NET Core Minimal APIs, offering built-in support for Swagger, API versioning, and minimalist endpoint creation.",
+  "shortName": "CCFClean.Minimal.Definition",
+  "sourceName": "CCFCleanMinimalApiLib",
+  "symbols": {
+    "Framework":{
+      "type": "parameter",
+      "datatype":"choice",
+      "description": "The target project framework.",
+      "choices": [
+        {
+          "choice": "net8.0"
+        }
+      ],
+      "defaultValue":"net8.0",
+      "replaces": "{dotnetTargetFramework}"
+    },
+    "skipRestore": {
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "If specified, skips the automatic restore of the project on create.",
+      "defaultValue": "false"
+    }
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "exclude": [ ".vs/**", ".template_config/**" ]
+        }
+      ]
+    }
+  ]
+}
