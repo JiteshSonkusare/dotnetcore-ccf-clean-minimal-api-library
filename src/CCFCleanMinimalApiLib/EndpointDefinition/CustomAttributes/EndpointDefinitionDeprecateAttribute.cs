@@ -1,4 +1,4 @@
-﻿namespace CCFClean.Minimal.EndpointDefinition.CustomAttributes;
+﻿namespace CCFClean.Minimal.Definition.CustomAttributes;
 
 [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
 public sealed class EndpointDefinitionDeprecateAttribute : Attribute

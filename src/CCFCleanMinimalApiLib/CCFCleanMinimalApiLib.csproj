@@ -4,7 +4,34 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Title>CCF Clean Minimal Definition</Title>
+    <Copyright>CCF 2024</Copyright>
+    <PackageTags>WEB;CLEAN;CCF;DNB</PackageTags>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>CCFClean.Minimal.Definition</PackageId>
+    <Version>2.0.0</Version>
+    <Authors>Jitesh Sonkusare</Authors>
+    <Company />
+    <Product />
+    <Description>This NuGet package enables the development of ASP.NET Core Minimal APIs, offering built-in support for Swagger, API versioning, and minimalist endpoint creation.</Description>
+    <PackageProjectUrl>https://github.com/JiteshSonkusare/dotnetcore-clean-api-template</PackageProjectUrl>
+    <PackageIcon>cleanapi.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/JiteshSonkusare/dotnetcore-clean-api-template</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>This NuGet package enables the development of ASP.NET Core Minimal APIs, offering built-in support for Swagger, API versioning, and minimalist endpoint creation.</PackageReleaseNotes>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\images\cleanapi.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Asp.Versioning.Http" Version="8.1.0" />

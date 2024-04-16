@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 
-namespace CCFClean.Minimal.EndpointDefinition;
+namespace CCFClean.Minimal.Definition;
 
 public class AppBuilderDefinition
 {

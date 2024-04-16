@@ -38,7 +38,7 @@ public static class Extension
 		return JsonSerializer.Deserialize(jsonContent, objectType, customOptions ?? globalJsonSerializerOptions);
 	}
 
-	internal static JsonSerializerOptions? globalJsonSerializerOptions;
+	public static JsonSerializerOptions? globalJsonSerializerOptions;
 
 	public static void SetGlobalJsonSerializerSettings(JsonSerializerOptions jsonSerializerOptions, JsonIgnoreCondition jsonIgnoreCondition = JsonIgnoreCondition.Never)
 	{

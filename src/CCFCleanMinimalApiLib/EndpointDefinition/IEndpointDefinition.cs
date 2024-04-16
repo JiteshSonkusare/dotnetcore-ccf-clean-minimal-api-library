@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 
-namespace CCFClean.Minimal.EndpointDefinition;
+namespace CCFClean.Minimal.Definition;
 
 public interface IEndpointDefinition
 {

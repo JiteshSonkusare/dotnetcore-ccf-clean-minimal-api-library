@@ -1,6 +1,6 @@
 ﻿using CCFClean.ApiVersioning;
 
-namespace CCFClean.Minimal.EndpointDefinition;
+namespace CCFClean.Minimal.Definition;
 
 public record EndpointRouteOptions()
 {

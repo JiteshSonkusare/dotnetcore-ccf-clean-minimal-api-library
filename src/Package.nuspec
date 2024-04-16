@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>CCF.Clean.Minimal.Definition</id>
+    <version>2.0.2</version>
+    <authors>Jitesh Sonkusare</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <icon>images/cleanapi.png</icon>
+    <projectUrl>https://github.com/JiteshSonkusare/dotnetcore-clean-api-template</projectUrl>
+    <description>This NuGet package enables the development of ASP.NET Core Minimal APIs, offering built-in support for Swagger, API versioning, and minimalist endpoint creation.</description>
+    <releaseNotes>This NuGet package enables the development of ASP.NET Core Minimal APIs, offering built-in support for Swagger, API versioning, and minimalist endpoint creation.</releaseNotes>
+    <copyright>CCF © 2024</copyright>
+    <tags>WEB;CLEAN;CCF;DNB</tags>
+    <dependencies>
+     <group targetFramework=".NETStandard2.1">
+        <dependency id="Asp.Versioning.Http" version="8.1.0" />
+        <dependency id="Asp.Versioning.Mvc.ApiExplorer" version="8.1.0" />
+        <dependency id="Swashbuckle.AspNetCore" version="6.5.0" />
+        <dependency id="Swashbuckle.AspNetCore.Annotations" version="6.5.0" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>
