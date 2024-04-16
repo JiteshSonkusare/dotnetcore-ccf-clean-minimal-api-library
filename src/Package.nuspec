@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package>
   <metadata>
-    <id>CCF.Clean.Minimal.Definition</id>
+    <id>CCFClean.Minimal.Definition</id>
     <version>2.0.2</version>
     <authors>Jitesh Sonkusare</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -13,7 +13,7 @@
     <copyright>CCF © 2024</copyright>
     <tags>WEB;CLEAN;CCF;DNB</tags>
     <dependencies>
-     <group targetFramework=".NETStandard2.1">
+     <group>
         <dependency id="Asp.Versioning.Http" version="8.1.0" />
         <dependency id="Asp.Versioning.Mvc.ApiExplorer" version="8.1.0" />
         <dependency id="Swashbuckle.AspNetCore" version="6.5.0" />

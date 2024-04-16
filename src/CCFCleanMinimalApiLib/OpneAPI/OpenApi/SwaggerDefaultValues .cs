@@ -2,6 +2,7 @@
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using CCFClean.Minimal.Definition.CustomAttributes;
 
 namespace CCFClean.Swagger.OpenApi;
 
@@ -11,7 +12,7 @@ public class SwaggerDefaultValues : IOperationFilter
 	{
 		var apiDescription = context.ApiDescription;
 
-		operation.Deprecated = apiDescription.IsDeprecated();
+		operation.Deprecated = IsDeprecated(apiDescription) | apiDescription.IsDeprecated();
 
 		foreach (var responseType in context.ApiDescription.SupportedResponseTypes)
 		{
@@ -48,5 +49,12 @@ public class SwaggerDefaultValues : IOperationFilter
 
 			parameter.Required |= description.IsRequired;
 		}
+	}
+
+	private static bool IsDeprecated(ApiDescription apiDescription)
+	{
+		return apiDescription.ActionDescriptor.EndpointMetadata
+			.OfType<EndpointDeprecateAttribute>()
+			.Any();
 	}
 }
