@@ -41,7 +41,7 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
 			{
 				Name = _openApiConfig?.OpenApiInfoExt?.OpenApiContactExt?.Name,
 				Email = _openApiConfig?.OpenApiInfoExt?.OpenApiContactExt?.Email,
-				Url = new Uri(_openApiConfig?.OpenApiInfoExt?.OpenApiContactExt?.Url ?? string.Empty, UriKind.Relative)
+				Url = _openApiConfig?.OpenApiInfoExt?.OpenApiContactExt?.Url
 			}
 		};
 

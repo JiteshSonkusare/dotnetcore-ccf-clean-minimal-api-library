@@ -1,5 +1,6 @@
 ﻿using CCFClean.Swagger.OpenApi;
 using CCFClean.Swagger.Extensions;
+using CCFClean.Minimal.Definition;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Http.Json;
 using CCFClean.Swagger.Configurations;
@@ -10,10 +11,10 @@ namespace CCFClean.Swagger;
 
 public static class ServiceCollectionExtensions
 {
-	public static IServiceCollection AddCCFSwagger(this IServiceCollection services, OpenApiConfig openApiConfig)
+	public static IServiceCollection AddCCFSwagger(this IServiceCollection services, Action<OpenApiConfig> openApiConfig)
 	{
 		services
-			.AddSingleton(openApiConfig)
+			.AddCCFCleanConfigSingleton(openApiConfig)
 			.Configure<JsonOptions>(options =>
 			{
 				Extension.SetGlobalJsonSerializerSettings(options.SerializerOptions);

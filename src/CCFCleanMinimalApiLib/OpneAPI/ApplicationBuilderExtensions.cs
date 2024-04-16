@@ -4,13 +4,15 @@ namespace CCFClean.Swagger;
 
 public static class ApplicationBuilderExtensions
 {
-	public static WebApplication UseCCFSwagger(this WebApplication app, string documentTitle = "SwaggerUI", bool modelSchemaHide = false)
+	public static WebApplication UseCCFSwagger(this WebApplication app, Action<SwaggerConfigOptions>? swaggerOptions = null)
 	{
+		var swaggerConfigOptions = Minimal.Definition.Extensions.InvokeConfigureOptions(swaggerOptions);
+
 		app.UseSwagger()
 			.UseSwaggerUI(options =>
 			{
-				options.DocumentTitle = documentTitle;
-				if (modelSchemaHide)
+				options.DocumentTitle = swaggerConfigOptions.DocumentTitle;
+				if (swaggerConfigOptions.ModelSchemaHide)
 					options.DefaultModelsExpandDepth(-1);
 				var descriptions = app.DescribeApiVersions().OrderByDescending(v => v.ApiVersion);
 				foreach (var description in descriptions)

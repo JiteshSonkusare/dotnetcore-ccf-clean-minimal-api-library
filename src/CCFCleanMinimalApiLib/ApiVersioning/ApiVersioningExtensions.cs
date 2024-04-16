@@ -7,30 +7,32 @@ namespace CCFClean.ApiVersioning;
 
 public record DefineApiVersion(int MajorVersion, int MinorVersion, bool IsVersionDeprecated = false);
 
-public static class ApiVersioningExtensions
+internal static class ApiVersioningExtensions
 {
-	public static RouteGroupBuilder EndpointRouteBuilder(this WebApplication app, IEnumerable<DefineApiVersion> apiVersions, string apiPathPrefix)
+	internal static RouteGroupBuilder EndpointRouteBuilder(this WebApplication app, IEnumerable<DefineApiVersion>? apiVersions, string? apiPathPrefix)
 	{
 		ApiVersionSet apiVersionSet = app.NewApiVersionSet()
 										 .WithApiVersions(apiVersions)
 										 .ReportApiVersions()
 										 .Build();
 
-		RouteGroupBuilder versionedGroup = app.MapGroup($"{apiPathPrefix}/v{{version:apiVersion}}")	
-			                                  .WithApiVersionSet(apiVersionSet);
+		RouteGroupBuilder versionedGroup = app.MapGroup($"{apiPathPrefix}/v{{version:apiVersion}}")
+											  .WithApiVersionSet(apiVersionSet);
 
 		return versionedGroup;
 	}
 
-	private static ApiVersionSetBuilder WithApiVersions(this ApiVersionSetBuilder builder, IEnumerable<DefineApiVersion> apiVersions)
+	private static ApiVersionSetBuilder WithApiVersions(this ApiVersionSetBuilder builder, IEnumerable<DefineApiVersion>? apiVersions)
 	{
-		foreach (var version in apiVersions)
+		if (apiVersions is not null)
 		{
-			builder.HasApiVersion(version.MajorVersion, version.MinorVersion);
-			if (version.IsVersionDeprecated)
-				builder.HasDeprecatedApiVersion(version.MajorVersion);
+			foreach (var version in apiVersions)
+			{
+				builder.HasApiVersion(version.MajorVersion, version.MinorVersion);
+				if (version.IsVersionDeprecated)
+					builder.HasDeprecatedApiVersion(version.MajorVersion);
+			}
 		}
-
 		return builder;
 	}
 }

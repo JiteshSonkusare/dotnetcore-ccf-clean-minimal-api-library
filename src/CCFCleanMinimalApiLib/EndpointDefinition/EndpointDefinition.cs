@@ -1,9 +1,8 @@
 ﻿using System.Reflection;
+using CCFClean.ApiVersioning;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using CCFClean.Minimal.EndpointDefinition.CustomAttributes;
-using CCFCleanAPITemplate.EndpointDefinition.Models;
 
 namespace CCFClean.Minimal.EndpointDefinition;
 
@@ -33,8 +32,12 @@ public static class EndpointDefinition
 		return builder;
 	}
 
-	public static IApplicationBuilder MapEndpointDefinitions(this WebApplication app, RouteGroupBuilder? routeGroupBuilder = null)
+	public static IApplicationBuilder MapEndpointDefinitions(this WebApplication app, Action<EndpointRouteOptions> endpointRouteOptions)
 	{
+		var options = Definition.Extensions.InvokeConfigureOptions(endpointRouteOptions);
+
+		var routeGroupBuilder = app.EndpointRouteBuilder(options?.ApiVersions, options?.ApiPathPrefix);
+
 		var definitions = app.Services.GetRequiredService<IReadOnlyCollection<IEndpointDefinition>>();
 
 		foreach (var endpointDefinition in definitions)

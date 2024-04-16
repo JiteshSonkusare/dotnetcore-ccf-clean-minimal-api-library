@@ -33,5 +33,5 @@ public record OpenApiContactExt
 	/// <summary>
 	/// Api owner url
 	/// </summary>
-	public string? Url { get; set; }
+	public Uri? Url { get; set; }
 }

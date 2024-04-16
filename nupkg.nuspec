@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
         <id>CCF.Clean.Minimal.Definition</id>
-        <version>1.0.0</version>
+        <version>1.1.0</version>
         <title>CCF Clean Minimal Definition</title>
         <license type="file">LICENSE</license>
         <description>This NuGet package enables the development of ASP.NET Core Minimal APIs, offering built-in support for Swagger, API versioning, and minimalist endpoint creation.</description>

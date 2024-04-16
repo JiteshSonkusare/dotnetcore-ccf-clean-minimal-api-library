@@ -4,16 +4,18 @@ namespace CCFClean.ApiVersioning;
 
 public static class Extensions
 {
-	public static ApiVersioningOptions AddSunsetPolicy(this ApiVersioningOptions options, SunsetPolicyOptions sunsetPolicyOptions)
+	public static ApiVersioningOptions AddSunsetPolicy(this ApiVersioningOptions options, SunsetPolicyOptions? sunsetPolicyOptions = null)
 	{
-		options.Policies
+		if (sunsetPolicyOptions is not null)
+		{
+			options.Policies
 			.Sunset(sunsetPolicyOptions.Version, sunsetPolicyOptions.Status)
 			.Effective(sunsetPolicyOptions.Effecctive.Year, sunsetPolicyOptions.Effecctive.Month, sunsetPolicyOptions.Effecctive.Day)
 			.Link(sunsetPolicyOptions.URL)
 			.Title(sunsetPolicyOptions.Title)
 			.Type("text/html")
 			.Language("en");
-
+		}
 		return options;
 	}
 }

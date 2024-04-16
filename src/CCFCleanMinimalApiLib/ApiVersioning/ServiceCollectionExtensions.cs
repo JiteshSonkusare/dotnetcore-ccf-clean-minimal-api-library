@@ -5,16 +5,18 @@ namespace CCFClean.ApiVersioning;
 
 public static class ServiceCollectionExtensions
 {
-	public static IServiceCollection AddCCFApiVersioning(this IServiceCollection services, ApiVersioningReaderEnum apiVersionReaderEnum = ApiVersioningReaderEnum.UrlSegment, SunsetPolicyOptions? sunsetPolicyOptions = null)
+	public static IServiceCollection AddCCFApiVersioning(this IServiceCollection services, Action<ApiVersioningConfigOptions>? apiVersioningOptions = null)
 	{
+		var apiVersioningConfigOptions = Minimal.Definition.Extensions.InvokeConfigureOptions(apiVersioningOptions);
+
 		services.AddApiVersioning(options =>
 		{
-			if (sunsetPolicyOptions is not null)
-				options.AddSunsetPolicy(sunsetPolicyOptions);
+			if (apiVersioningConfigOptions is not null)
+				options.AddSunsetPolicy(apiVersioningConfigOptions.SunsetPolicyOptions);
 			options.DefaultApiVersion = new ApiVersion(1, 0);
 			options.AssumeDefaultVersionWhenUnspecified = true;
 			options.ReportApiVersions = true;
-			options.ApiVersionReader = apiVersionReaderEnum switch
+			options.ApiVersionReader = apiVersioningConfigOptions?.ApiVersionReaderEnum switch
 			{
 				ApiVersioningReaderEnum.UrlSegment => new UrlSegmentApiVersionReader(),
 				ApiVersioningReaderEnum.QueryString => new QueryStringApiVersionReader("version"),
@@ -24,7 +26,7 @@ public static class ServiceCollectionExtensions
 		}).AddApiExplorer(options =>
 		{
 			options.GroupNameFormat = "'v'VVV";
-			if (apiVersionReaderEnum == ApiVersioningReaderEnum.UrlSegment)
+			if (apiVersioningConfigOptions.ApiVersionReaderEnum == ApiVersioningReaderEnum.UrlSegment)
 				options.SubstituteApiVersionInUrl = true;
 		});
 
