@@ -1,4 +1,7 @@
 ﻿using System.Text.Json;
+using Microsoft.OpenApi.Models;
+using System.Xml.Serialization;
+using Microsoft.AspNetCore.Http;
 using System.Text.Json.Serialization;
 
 namespace CCFClean.Swagger.Extensions;
@@ -46,5 +49,31 @@ public static class Extension
 		globalJsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 		globalJsonSerializerOptions.DefaultIgnoreCondition = jsonIgnoreCondition;
 		_ = globalJsonSerializerOptions.ToJson();
+	}
+
+	/// <summary>
+	/// Convert xml to object
+	/// </summary>
+	/// <param name="xmlContent"></param>
+	/// <param name="objectType"></param>
+	/// <param name="customOptions"></param>
+	/// <returns>Deserilized object data</returns>
+	public static T? ConvertFromXml<T>(this string xmlContent)
+	{
+		if (string.IsNullOrWhiteSpace(xmlContent))
+			return default;
+		XmlSerializer serializer = new(typeof(T));
+		using StringReader reader = new(xmlContent);
+		return (T)serializer.Deserialize(reader)!;
+	}
+
+	internal static string? GetValueFromContext(HttpContext context, ParameterLocation location, string name)
+	{
+		return location switch
+		{
+			ParameterLocation.Header => context.Request.Headers[name].FirstOrDefault(),
+			ParameterLocation.Query => context.Request.Query[name].FirstOrDefault(),
+			_ => string.Empty,
+		};
 	}
 }

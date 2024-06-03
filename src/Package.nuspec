@@ -2,8 +2,10 @@
 <package>
   <metadata>
     <id>CCFClean.Minimal.Definition</id>
-    <version>2.0.2</version>
+    <version>2.1.0</version>
+    <title>CCF Clean Minimal Definition</title>
     <authors>Jitesh Sonkusare</authors>
+    <owners>Jitesh Sonkusare</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <icon>images/cleanapi.png</icon>
@@ -20,5 +22,6 @@
         <dependency id="Swashbuckle.AspNetCore.Annotations" version="6.5.0" />
       </group>
     </dependencies>
+    <readme>./README.md</readme>
   </metadata>
 </package>

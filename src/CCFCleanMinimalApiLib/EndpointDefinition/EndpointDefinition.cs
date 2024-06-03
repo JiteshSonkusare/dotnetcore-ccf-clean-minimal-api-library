@@ -8,6 +8,12 @@ namespace CCFClean.Minimal.Definition;
 
 public static class EndpointDefinition
 {
+	/// <summary>
+	/// Register the CCFClean Minimal Endpoint Definition API pattern.
+	/// </summary>
+	/// <param name="builder"></param>
+	/// <param name="assembly"></param>
+	/// <returns></returns>
 	public static WebApplicationBuilder AddEndpointDefinitions(this WebApplicationBuilder builder, Assembly assembly)
 	{
 		var endpointDefinitions = new List<IEndpointDefinition>();
@@ -32,6 +38,12 @@ public static class EndpointDefinition
 		return builder;
 	}
 
+	/// <summary>
+	/// Use to map the CCFClean Minimal Endpoint Definition API pattern, specifiying required API versions and option to customize the endpoint route path.
+	/// </summary>
+	/// <param name="app"></param>
+	/// <param name="endpointRouteOptions"></param>
+	/// <returns></returns>
 	public static IApplicationBuilder MapEndpointDefinitions(this WebApplication app, Action<EndpointRouteOptions> endpointRouteOptions)
 	{
 		var options = Extensions.InvokeConfigureOptions(endpointRouteOptions);

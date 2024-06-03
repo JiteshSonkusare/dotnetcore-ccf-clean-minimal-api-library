@@ -5,9 +5,16 @@ namespace CCFClean.ApiVersioning;
 
 public static class ServiceCollectionExtensions
 {
-	public static IServiceCollection AddCCFApiVersioning(this IServiceCollection services, Action<ApiVersioningConfigOptions>? apiVersioningOptions = null)
+	/// <summary>
+	/// Add API versioning (Optionally configure the path segment for API versioning (default is 'UrlSegment') and add sunset policy for the API version.)
+	/// </summary>
+	/// <param name="services"></param>
+	/// <param name="apiVersioning"></param>
+	/// <param name="sunsetPolicy"></param>
+	/// <returns></returns>
+	public static IServiceCollection AddCCFApiVersioning(this IServiceCollection services, Action<ApiVersioningConfigOptions>? apiVersioning = null)
 	{
-		var apiVersioningConfigOptions = Minimal.Definition.Extensions.InvokeConfigureOptions(apiVersioningOptions);
+		var apiVersioningConfigOptions = Minimal.Definition.Extensions.InvokeConfigureOptions(apiVersioning);
 
 		services.AddApiVersioning(options =>
 		{

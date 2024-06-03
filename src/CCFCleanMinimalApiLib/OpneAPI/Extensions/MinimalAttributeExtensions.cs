@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Builder;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace CCFClean.Swagger.Summaries;

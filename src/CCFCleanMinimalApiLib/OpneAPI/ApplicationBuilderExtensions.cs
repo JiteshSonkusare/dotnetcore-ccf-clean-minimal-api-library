@@ -4,9 +4,17 @@ namespace CCFClean.Swagger;
 
 public static class ApplicationBuilderExtensions
 {
+	/// <summary>
+	/// Use CCF Swagger to configure options.
+	/// </summary>
+	/// <param name="app"></param>
+	/// <param name="swaggerOptions"></param>
+	/// <returns></returns>
 	public static WebApplication UseCCFSwagger(this WebApplication app, Action<SwaggerConfigOptions>? swaggerOptions = null)
 	{
-		var swaggerConfigOptions = Minimal.Definition.Extensions.InvokeConfigureOptions(swaggerOptions);
+		SwaggerConfigOptions swaggerConfigOptions = new();
+		if (swaggerOptions != null)
+			swaggerConfigOptions = Minimal.Definition.Extensions.InvokeConfigureOptions(swaggerOptions);
 
 		app.UseSwagger()
 			.UseSwaggerUI(options =>

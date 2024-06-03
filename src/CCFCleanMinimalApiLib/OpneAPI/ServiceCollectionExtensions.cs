@@ -11,6 +11,12 @@ namespace CCFClean.Swagger;
 
 public static class ServiceCollectionExtensions
 {
+	/// <summary>
+	/// Register CCF Swagger and configure options for OpenAPI documentation and Swagger authentication.
+	/// </summary>
+	/// <param name="services"></param>
+	/// <param name="openApiConfig"></param>
+	/// <returns></returns>
 	public static IServiceCollection AddCCFSwagger(this IServiceCollection services, Action<OpenApiConfig> openApiConfig)
 	{
 		services
@@ -24,7 +30,7 @@ public static class ServiceCollectionExtensions
 			.AddSwaggerGen(options =>
 			{
 				options.EnableAnnotations();
-				options.OperationFilter<SwaggerDefaultValues>();
+				options.OperationFilter<SwaggerOperationFilter>();
 				options.DocumentFilter<SwaggerDocumentFilter>();
 			});
 

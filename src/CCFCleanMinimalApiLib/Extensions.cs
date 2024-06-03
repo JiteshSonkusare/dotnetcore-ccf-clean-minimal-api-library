@@ -13,7 +13,7 @@ public static class Extensions
 		return services;
 	}
 
-	public static TOptions InvokeConfigureOptions<TOptions>(Action<TOptions> configureAction) where TOptions : new()
+	public static TOptions InvokeConfigureOptions<TOptions>(Action<TOptions>? configureAction) where TOptions : new()
 	{
 		var options = new TOptions();
 		configureAction?.Invoke(options);

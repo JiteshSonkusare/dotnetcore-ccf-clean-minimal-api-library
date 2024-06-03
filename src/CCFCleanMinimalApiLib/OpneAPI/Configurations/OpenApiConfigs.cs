@@ -6,15 +6,19 @@
 public record OpenApiConfig
 {
 	/// <summary>
-	/// Sends authentication parameters to swagger document.
+	/// Sends options to configure authentication to swagger document.
 	/// </summary>
 	public SecurityExt? SecurityExt { get; set; }
 	/// <summary>
-	/// Sends swagger document details.
+	/// Sends OpenAPI details to show on swagger document.
 	/// </summary>
 	public OpenApiInfoExt? OpenApiInfoExt { get; set; }
 	/// <summary>
-	/// Sends server details to swagger document.
+	/// Sends server details to show on swagger document.
 	/// </summary>
 	public ServerPathFilters? ServerPathFilters { get; set; }
+	/// <summary>
+	/// typeof(class): Set global headers to api all endpoints.
+	/// </summary>
+	public Type? GlobalHeaderType { get; set; }
 }

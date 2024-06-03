@@ -1,13 +1,24 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using System.Reflection;
+using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
+using CCFClean.Swagger.Configurations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using CCFClean.Minimal.Definition.CustomAttributes;
+using CCFClean.Minimal.CustomHeader;
 
 namespace CCFClean.Swagger.OpenApi;
 
-public class SwaggerDefaultValues : IOperationFilter
+public class SwaggerOperationFilter : IOperationFilter
 {
+	private readonly OpenApiConfig _openApiConfig;
+
+	public SwaggerOperationFilter(OpenApiConfig openApiConfig)
+	{
+		_openApiConfig = openApiConfig;
+	}
+
 	public void Apply(OpenApiOperation operation, OperationFilterContext context)
 	{
 		var apiDescription = context.ApiDescription;
@@ -49,6 +60,9 @@ public class SwaggerDefaultValues : IOperationFilter
 
 			parameter.Required |= description.IsRequired;
 		}
+
+		if (_openApiConfig != null)
+			SetGlobalHeaders(operation);
 	}
 
 	private static bool IsDeprecated(ApiDescription apiDescription)
@@ -56,5 +70,39 @@ public class SwaggerDefaultValues : IOperationFilter
 		return apiDescription.ActionDescriptor.EndpointMetadata
 			.OfType<EndpointDeprecateAttribute>()
 			.Any();
+	}
+
+	private void SetGlobalHeaders(OpenApiOperation operation)
+	{
+		if (_openApiConfig?.GlobalHeaderType != null)
+		{
+			var headerProperties = _openApiConfig.GlobalHeaderType.GetProperties()
+				.Where(p => p.GetCustomAttribute<HeaderInfoAttribute>() != null);
+
+			foreach (var property in headerProperties)
+			{
+				var headerInfo = property.GetCustomAttribute<HeaderInfoAttribute>();
+				if (headerInfo != null)
+				{
+					var schema = new OpenApiSchema
+					{
+						Type = headerInfo.DataType,
+						Format = headerInfo.DataFormat,
+						Default = string.IsNullOrEmpty(headerInfo.DefaultValue) ? null : new OpenApiString(headerInfo.DefaultValue),
+						Enum = headerInfo.AllowedValues?.Split(new char[] { ',', ';', ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(V => (IOpenApiAny)new OpenApiString(V)).ToList()
+					};
+
+					operation.Parameters ??= new List<OpenApiParameter>();
+					operation.Parameters.Add(new OpenApiParameter
+					{
+						Name = headerInfo.Name,
+						In = headerInfo.ParameterIn,
+						Required = headerInfo.IsRequired,
+						Description = headerInfo.Description,
+						Schema = schema
+					});
+				}
+			}
+		}
 	}
 }
