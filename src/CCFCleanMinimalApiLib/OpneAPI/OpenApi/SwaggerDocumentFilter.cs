@@ -1,5 +1,4 @@
 ﻿using Microsoft.OpenApi.Models;
-using Microsoft.Extensions.Options;
 using CCFClean.Swagger.Configurations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -27,10 +26,15 @@ public class SwaggerDocumentFilter : IDocumentFilter
 		}
 		if (_openApiConfig?.SecurityExt != null)
 		{
-			foreach (var _ in from nonSecuredVersion in _openApiConfig?.SecurityExt?.NonSecuredVersions
-							  where context.DocumentName == nonSecuredVersion
-							  select new { })
-			{ swaggerDoc.Components.SecuritySchemes.Remove("Bearer"); }
+			if (_openApiConfig?.SecurityExt?.NonSecuredVersions != null)
+			{
+				foreach (var _ in from nonSecuredVersion in _openApiConfig?.SecurityExt?.NonSecuredVersions
+								  where context.DocumentName == nonSecuredVersion
+								  select new { })
+				{ 
+					swaggerDoc.Components.SecuritySchemes.Remove("Bearer");
+				}
+			}
 		}
 	}
 
