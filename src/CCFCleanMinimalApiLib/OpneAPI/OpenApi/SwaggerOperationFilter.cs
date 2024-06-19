@@ -1,12 +1,11 @@
-﻿using System.Reflection;
-using Microsoft.OpenApi.Any;
+﻿using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
+using CCFClean.Minimal.CustomHeader;
 using CCFClean.Swagger.Configurations;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using CCFClean.Minimal.Definition.CustomAttributes;
-using CCFClean.Minimal.CustomHeader;
 
 namespace CCFClean.Swagger.OpenApi;
 
@@ -61,7 +60,7 @@ public class SwaggerOperationFilter : IOperationFilter
 			parameter.Required |= description.IsRequired;
 		}
 
-		if (_openApiConfig != null)
+		if (_openApiConfig.EnableGlobalHeader)
 			SetGlobalHeaders(operation);
 	}
 
@@ -72,36 +71,33 @@ public class SwaggerOperationFilter : IOperationFilter
 			.Any();
 	}
 
-	private void SetGlobalHeaders(OpenApiOperation operation)
+	private static void SetGlobalHeaders(OpenApiOperation operation)
 	{
-		if (_openApiConfig?.GlobalHeaderType != null)
+		var globalHeaderType = GlobalHeaderExtensions.GetGlobalHeadersType();
+		var headerProperties = globalHeaderType.GetGlobalHeaderProperties();
+
+		foreach (var (Property, HeaderInfo) in headerProperties)
 		{
-			var headerProperties = _openApiConfig.GlobalHeaderType.GetProperties()
-				.Where(p => p.GetCustomAttribute<HeaderInfoAttribute>() != null);
-
-			foreach (var property in headerProperties)
+			var headerInfo = HeaderInfo;
+			if (headerInfo != null)
 			{
-				var headerInfo = property.GetCustomAttribute<HeaderInfoAttribute>();
-				if (headerInfo != null)
+				var schema = new OpenApiSchema
 				{
-					var schema = new OpenApiSchema
-					{
-						Type = headerInfo.DataType,
-						Format = headerInfo.DataFormat,
-						Default = string.IsNullOrEmpty(headerInfo.DefaultValue) ? null : new OpenApiString(headerInfo.DefaultValue),
-						Enum = headerInfo.AllowedValues?.Split(new char[] { ',', ';', ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(V => (IOpenApiAny)new OpenApiString(V)).ToList()
-					};
+					Type = headerInfo.DataType,
+					Format = headerInfo.DataFormat,
+					Default = string.IsNullOrEmpty(headerInfo.DefaultValue) ? null : new OpenApiString(headerInfo.DefaultValue),
+					Enum = headerInfo.AllowedValues?.Split(new char[] { ',', ';', ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(V => (IOpenApiAny)new OpenApiString(V)).ToList()
+				};
 
-					operation.Parameters ??= new List<OpenApiParameter>();
-					operation.Parameters.Add(new OpenApiParameter
-					{
-						Name = headerInfo.Name,
-						In = headerInfo.ParameterIn,
-						Required = headerInfo.IsRequired,
-						Description = headerInfo.Description,
-						Schema = schema
-					});
-				}
+				operation.Parameters ??= new List<OpenApiParameter>();
+				operation.Parameters.Add(new OpenApiParameter
+				{
+					Name = headerInfo.Name,
+					In = headerInfo.ParameterIn,
+					Required = headerInfo.IsRequired,
+					Description = headerInfo.Description,
+					Schema = schema
+				});
 			}
 		}
 	}

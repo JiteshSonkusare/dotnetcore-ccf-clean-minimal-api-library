@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using CCFClean.Minimal.CustomHeader;
 
 namespace CCFClean.Swagger;
 
@@ -12,7 +13,7 @@ public static class ApplicationBuilderExtensions
 	/// <returns></returns>
 	public static WebApplication UseCCFSwagger(this WebApplication app, Action<SwaggerConfigOptions>? swaggerOptions = null)
 	{
-		SwaggerConfigOptions swaggerConfigOptions = new();
+		var swaggerConfigOptions = new SwaggerConfigOptions();
 		if (swaggerOptions != null)
 			swaggerConfigOptions = Minimal.Definition.Extensions.InvokeConfigureOptions(swaggerOptions);
 
@@ -29,7 +30,8 @@ public static class ApplicationBuilderExtensions
 					var name = description.GroupName.ToUpperInvariant();
 					options.SwaggerEndpoint(url, name);
 				}
-			});
+			})
+			.UseMiddleware<CustomHeaderMiddleware>();
 
 		return app;
 	}

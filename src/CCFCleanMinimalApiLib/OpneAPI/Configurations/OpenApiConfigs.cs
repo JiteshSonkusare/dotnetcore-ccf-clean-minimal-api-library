@@ -20,5 +20,5 @@ public record OpenApiConfig
 	/// <summary>
 	/// typeof(class): Set global headers to api all endpoints.
 	/// </summary>
-	public Type? GlobalHeaderType { get; set; }
+	public bool EnableGlobalHeader { get; set; } = false;
 }
