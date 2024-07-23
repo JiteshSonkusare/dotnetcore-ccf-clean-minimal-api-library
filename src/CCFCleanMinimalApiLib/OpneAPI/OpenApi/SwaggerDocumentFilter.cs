@@ -4,25 +4,24 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace CCFClean.Swagger.OpenApi;
 
-public class SwaggerDocumentFilter : IDocumentFilter
+public class SwaggerDocumentFilter(
+	OpenApiConfig openApiConfig) 
+	: IDocumentFilter
 {
-	private readonly OpenApiConfig _openApiConfig;
-
-	public SwaggerDocumentFilter(OpenApiConfig openApiConfig)
-	{
-		_openApiConfig = openApiConfig;
-	}
+	private readonly OpenApiConfig _openApiConfig = openApiConfig;
 
 	public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
 	{
 		if (_openApiConfig.ServerPathFilters != null)
 		{
-			var isBasePathListFilter = _openApiConfig.ServerPathFilters?.IsBasePathListFilter;
+			var useBasePathListFilter = _openApiConfig.ServerPathFilters?.UseBasePathListFilter;
 
-			if (isBasePathListFilter == null || Convert.ToBoolean(isBasePathListFilter))
-				swaggerDoc.Servers = GetBasePathListFilterURLs();
+			if (useBasePathListFilter == null || Convert.ToBoolean(useBasePathListFilter))
+				swaggerDoc.Servers = SetBasePathListFilterURLs;
 			else
-				swaggerDoc.Servers = GetCustomeBasePathFilterURLs(_openApiConfig?.ServerPathFilters?.CustomeBasePathFilter?.URL ?? string.Empty, _openApiConfig?.ServerPathFilters?.CustomeBasePathFilter?.EnvironmentNames ?? new List<string>());
+				swaggerDoc.Servers = SetCustomePathFilterURLs(
+					_openApiConfig?.ServerPathFilters?.CustomeBasePathFilter?.URL ?? string.Empty,
+					_openApiConfig?.ServerPathFilters?.CustomeBasePathFilter?.EnvironmentNames ?? []);
 		}
 		if (_openApiConfig?.SecurityExt != null)
 		{
@@ -31,31 +30,34 @@ public class SwaggerDocumentFilter : IDocumentFilter
 				foreach (var _ in from nonSecuredVersion in _openApiConfig?.SecurityExt?.NonSecuredVersions
 								  where context.DocumentName == nonSecuredVersion
 								  select new { })
-				{ 
+				{
 					swaggerDoc.Components.SecuritySchemes.Remove("Bearer");
 				}
 			}
 		}
 	}
 
-	private IList<OpenApiServer>? GetBasePathListFilterURLs()
+	private IList<OpenApiServer>? SetBasePathListFilterURLs
 	{
-		var devBasePathFilters = _openApiConfig.ServerPathFilters?.BasePathListFilter;
-		if (devBasePathFilters == null)
-			return new List<OpenApiServer>();
+		get
+		{
+			var devBasePathFilters = _openApiConfig.ServerPathFilters?.BasePathListFilter;
+			if (devBasePathFilters == null)
+				return [];
 
-		var openApiServers = devBasePathFilters?.Select(basePath =>
-			new OpenApiServer
-			{
-				Description = basePath.Environment,
-				Url = basePath.Url
-			})
-			.ToList();
+			var openApiServers = devBasePathFilters?.Select(basePath =>
+				new OpenApiServer
+				{
+					Description = basePath.Environment,
+					Url = basePath.Url
+				})
+				.ToList();
 
-		return openApiServers;
+			return openApiServers;
+		}
 	}
 
-	public static IList<OpenApiServer> GetCustomeBasePathFilterURLs(string url, IList<string> envNames)
+	public static IList<OpenApiServer> SetCustomePathFilterURLs(string url, IList<string> envNames)
 	{
 		var serverVariables = new Dictionary<string, OpenApiServerVariable>
 		{
@@ -71,6 +73,6 @@ public class SwaggerDocumentFilter : IDocumentFilter
 			Url = url,
 			Variables = serverVariables
 		};
-		return new List<OpenApiServer> { server };
+		return [server];
 	}
 }

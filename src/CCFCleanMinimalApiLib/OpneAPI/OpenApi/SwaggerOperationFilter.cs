@@ -9,14 +9,11 @@ using CCFClean.Minimal.Definition.CustomAttributes;
 
 namespace CCFClean.Swagger.OpenApi;
 
-public class SwaggerOperationFilter : IOperationFilter
+public class SwaggerOperationFilter(
+	OpenApiConfig openApiConfig) 
+	: IOperationFilter
 {
-	private readonly OpenApiConfig _openApiConfig;
-
-	public SwaggerOperationFilter(OpenApiConfig openApiConfig)
-	{
-		_openApiConfig = openApiConfig;
-	}
+	private readonly OpenApiConfig _openApiConfig = openApiConfig;
 
 	public void Apply(OpenApiOperation operation, OperationFilterContext context)
 	{
@@ -67,7 +64,7 @@ public class SwaggerOperationFilter : IOperationFilter
 	private static bool IsDeprecated(ApiDescription apiDescription)
 	{
 		return apiDescription.ActionDescriptor.EndpointMetadata
-			.OfType<EndpointDeprecateAttribute>()
+			.OfType<ApiEndpointDeprecate>()
 			.Any();
 	}
 

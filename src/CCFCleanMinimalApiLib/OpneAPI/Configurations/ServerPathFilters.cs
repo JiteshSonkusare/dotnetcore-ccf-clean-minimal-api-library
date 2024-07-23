@@ -5,7 +5,7 @@ public record ServerPathFilters
 	// <summary>
 	/// Set it to true for a standard list of URLs with environment names, or set it to false to apply a custom URL environment filter.
 	/// </summary>
-	public bool IsBasePathListFilter { get; set; }
+	public bool UseBasePathListFilter { get; set; }
 
 	/// <summary>
 	/// If IsBasePathListFilter is set to true, it is mandatory to send the environment name and URL as a list.

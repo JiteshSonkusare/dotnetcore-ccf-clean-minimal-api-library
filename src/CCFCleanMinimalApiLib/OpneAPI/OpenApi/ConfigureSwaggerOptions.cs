@@ -8,16 +8,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CCFClean.Swagger.OpenApi;
 
-public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
+public class ConfigureSwaggerOptions(
+	IApiVersionDescriptionProvider provider, 
+	OpenApiConfig openApiConfig) 
+	: IConfigureOptions<SwaggerGenOptions>
 {
-	private readonly OpenApiConfig _openApiConfig;
-	private readonly IApiVersionDescriptionProvider _provider;
-
-	public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider, OpenApiConfig openApiConfig)
-	{
-		_provider = provider;
-		_openApiConfig = openApiConfig;
-	}
+	private readonly OpenApiConfig _openApiConfig = openApiConfig;
+	private readonly IApiVersionDescriptionProvider _provider = provider;
 
 	public void Configure(SwaggerGenOptions options)
 	{
@@ -27,7 +24,7 @@ public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
 		}
 
 		if (_openApiConfig.SecurityExt != null && _openApiConfig.SecurityExt.IsSecured)
-			options.AddSwaggerSecurityDefination();
+			options.AddSwaggerSecurityDefination(_openApiConfig.SecuritySchemeParams ?? new SecuritySchemeParams());
 	}
 
 	private OpenApiInfo CreateInfoForApiVersion(ApiVersionDescription description)

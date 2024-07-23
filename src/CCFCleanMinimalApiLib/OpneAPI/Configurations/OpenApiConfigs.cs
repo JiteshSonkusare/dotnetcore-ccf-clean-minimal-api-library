@@ -21,4 +21,8 @@ public record OpenApiConfig
 	/// typeof(class): Set global headers to api all endpoints.
 	/// </summary>
 	public bool EnableGlobalHeader { get; set; } = false;
+	/// <summary>
+	/// Optional: Set open api security scheme parameters.
+	/// </summary>
+	public SecuritySchemeParams? SecuritySchemeParams { get; set; }
 }

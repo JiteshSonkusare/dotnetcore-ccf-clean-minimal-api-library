@@ -23,7 +23,7 @@ public static class EndpointDefinition
 				.Where(x => typeof(IEndpointDefinition).IsAssignableFrom(x)
 				   && !x.IsInterface
 				   && !x.IsAbstract
-				   && !x.IsDefined(typeof(EndpointDefinitionDeprecateAttribute), false))
+				   && !x.IsDefined(typeof(DefinitionDeprecate), false))
 				.Select(Activator.CreateInstance)
 				.Cast<IEndpointDefinition>());
 

@@ -1,12 +1,9 @@
 ﻿namespace CCFClean.Minimal.Definition.CustomAttributes;
 
 [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
-public sealed class EndpointDefinitionDeprecateAttribute : Attribute
+public sealed class DefinitionDeprecate(
+	string? message = null)
+	: Attribute
 {
-	public string? Message { get; }
-
-	public EndpointDefinitionDeprecateAttribute(string? message = null)
-	{
-		Message = message;
-	}
+	public string? Message { get; } = message;
 }
