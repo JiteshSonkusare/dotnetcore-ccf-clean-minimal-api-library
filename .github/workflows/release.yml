@@ -21,6 +21,4 @@ jobs:
     - name: Clean up existing .nupkg files
       run: rm -f *.nupkg
     - name: Pack NuGet Package
-      run: nuget pack ./nupkg.nuspec -OutputDirectory . -Properties Configuration=Release -NoDefaultExcludes
-    - name: Push to NuGet
-      run: nuget push *.nupkg -ApiKey ${{secrets.nuget_api_key}} -Source https://api.nuget.org/v3/index.json
+      run: nuget pack ./nupkg.nuspec -OutputDirectory . -Properties Configuration=Release -NoDefaultExcludes version=$(version)
