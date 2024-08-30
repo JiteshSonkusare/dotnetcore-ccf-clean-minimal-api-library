@@ -9,7 +9,7 @@
     <PackageTags>WEB;CLEAN;CCF;DNB</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>CCFClean.Minimal.Definition</PackageId>
-    <Version>2.3.0</Version>
+    <Version>2.4.0</Version>
     <Authors>Jitesh Sonkusare</Authors>
     <Company />
     <Product />
@@ -20,7 +20,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/JiteshSonkusare/dotnetcore-clean-api-template</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>Updates to swagger ui security.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added ApiKey Auhtentication support</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

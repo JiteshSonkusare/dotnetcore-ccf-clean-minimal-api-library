@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>CCFClean.Minimal.Definition</id>
-    <version>2.3.0</version>
+    <version>2.4.0</version>
     <title>CCF Clean Minimal Definition</title>
     <authors>Jitesh Sonkusare</authors>
     <owners>Jitesh Sonkusare</owners>
@@ -11,7 +11,7 @@
     <icon>images/cleanapi.png</icon>
     <projectUrl>https://github.com/JiteshSonkusare/dotnetcore-clean-api-template</projectUrl>
     <description>This NuGet package enables the development of ASP.NET Core Minimal APIs, offering built-in support for Swagger, API versioning, and minimalist endpoint creation.</description>
-    <releaseNotes>Added global headers support and SwaggerUI bug fixes.</releaseNotes>
+    <releaseNotes>Added ApiKey Authentication support.</releaseNotes>
     <copyright>CCF © 2024</copyright>
     <tags>WEB;CLEAN;CCF;DNB</tags>
     <dependencies>
@@ -20,6 +20,12 @@
       <dependency id="Swashbuckle.AspNetCore" version="6.6.2" />
       <dependency id="Swashbuckle.AspNetCore.Annotations" version="6.6.2" />
     </dependencies>
-    <readme>./README.md</readme>
+    <readme>README.md</readme>
   </metadata>
+  <files>
+    <file src="CCFCleanMinimalApiLib\bin\Release\net8.0\CCFCleanMinimalApiLib.dll" target="lib\net8.0\" />
+    <file src="CCFCleanMinimalApiLib\bin\Release\net8.0\CCFCleanMinimalApiLib.pdb" target="lib\net8.0\" />
+    <file src="README.md" target="." />
+    <file src="images\cleanapi.png" target="images\" />
+  </files>
 </package>
