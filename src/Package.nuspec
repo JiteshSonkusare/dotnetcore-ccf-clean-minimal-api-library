@@ -23,9 +23,9 @@
     <readme>README.md</readme>
   </metadata>
   <files>
-    <file src="../src/CCFCleanMinimalApiLib/bin/Release/net8.0/CCFCleanMinimalApiLib.dll" target="lib/net8.0/" />
-    <file src="../src/CCFCleanMinimalApiLib/bin/Release/net8.0/CCFCleanMinimalApiLib.pdb" target="lib/net8.0/" />
-    <file src="../src/images/cleanapi.png" target="images/" />
+    <file src="./src/CCFCleanMinimalApiLib/bin/Release/net8.0/CCFCleanMinimalApiLib.dll" target="lib/net8.0/" />
+    <file src="./src/CCFCleanMinimalApiLib/bin/Release/net8.0/CCFCleanMinimalApiLib.pdb" target="lib/net8.0/" />
+    <file src="./src/images/cleanapi.png" target="images/" />
     <file src="README.md" target="." />
   </files>
 </package>
