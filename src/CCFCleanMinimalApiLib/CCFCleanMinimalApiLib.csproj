@@ -9,7 +9,7 @@
     <PackageTags>WEB;CLEAN;CCF;DNB</PackageTags>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>CCFClean.Minimal.Definition</PackageId>
-    <Version>2.4.2</Version>
+    <Version>2.4.3</Version>
     <Authors>Jitesh Sonkusare</Authors>
     <Company />
     <Product />
