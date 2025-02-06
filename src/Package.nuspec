@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>CCFClean.Minimal.Definition</id>
-    <version>2.4.1</version>
+    <version>2.4.2</version>
     <title>CCF Clean Minimal Definition</title>
     <authors>Jitesh Sonkusare</authors>
     <owners>Jitesh Sonkusare</owners>
@@ -17,8 +17,8 @@
     <dependencies>
       <dependency id="Asp.Versioning.Http" version="8.1.0" />
       <dependency id="Asp.Versioning.Mvc.ApiExplorer" version="8.1.0" />
-      <dependency id="Swashbuckle.AspNetCore" version="6.6.2" />
-      <dependency id="Swashbuckle.AspNetCore.Annotations" version="6.6.2" />
+      <dependency id="Swashbuckle.AspNetCore" version="7.2.0" />
+      <dependency id="Swashbuckle.AspNetCore.Annotations" version="7.2.0" />
     </dependencies>
     <readme>README.md</readme>
   </metadata>
