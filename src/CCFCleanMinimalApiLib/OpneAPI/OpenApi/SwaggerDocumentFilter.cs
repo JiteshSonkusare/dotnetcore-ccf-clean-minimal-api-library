@@ -31,7 +31,7 @@ public class SwaggerDocumentFilter(
 								  where context.DocumentName == nonSecuredVersion
 								  select new { })
 				{
-					swaggerDoc.Components.SecuritySchemes.Remove("Bearer");
+					swaggerDoc.Components.SecuritySchemes.Remove(_openApiConfig?.SecuritySchemeParams?.Scheme ?? "Bearer");
 				}
 			}
 		}
